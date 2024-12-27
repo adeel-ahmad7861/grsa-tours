@@ -8,6 +8,7 @@ const toursubmit = Joi.object({
     flights: Joi.string().required().trim(),
     hotels: Joi.string().required().trim(),
     resorts: Joi.string().required().trim(),
+    description: Joi.string().required().trim(),
 });
 
 const tourdelete = Joi.object({
@@ -30,6 +31,7 @@ const tourupdate = Joi.object({
     flights: Joi.string().optional().trim(),
     hotels: Joi.string().optional().trim(),
     resorts: Joi.string().optional().trim(),
+    description: Joi.string().optional().trim(),
 });
 
 module.exports = { toursubmit, tourdelete, toursearch, tourupdate };
