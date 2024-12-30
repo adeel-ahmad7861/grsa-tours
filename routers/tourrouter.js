@@ -1,14 +1,4 @@
 
-// const express = require('express');
-// const Tour= require('../middlewares/tourmiddleware');
-// const tour= require('../controller/tourcontroller');
-// const router = express.Router();
-
-// // Register user
-// router.post('/sumbit', Tour,tour);
-
-
-// module.exports = router;
 
 const express = require('express');
 const middleware = require('../middlewares/tourmiddleware');  // Validation middleware
