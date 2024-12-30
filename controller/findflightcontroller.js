@@ -1,4 +1,6 @@
-const axios = require('axios');
+// findflightController.js
+
+const duffelAPI = require('../utils/flightauth');
 
 const findflight = async (req, res) => {
   try {
@@ -12,29 +14,19 @@ const findflight = async (req, res) => {
     } = req.body;
 
     // Make a POST request to the Duffel API
-    const response = await axios.post(
-      'https://api.duffel.com/air/offer_requests',
-      {
-        data: {
-          slices: [
-            {
-              origin,
-              destination,
-              departure_date,
-            },
-          ],
-          passengers,
-          cabin_class,
-        },
+    const response = await duffelAPI.post('/air/offer_requests', {
+      data: {
+        slices: [
+          {
+            origin,
+            destination,
+            departure_date,
+          },
+        ],
+        passengers,
+        cabin_class,
       },
-      {
-        headers: {
-          Authorization: 'Bearer duffel_test_CmfqWLfDrl-sQppiRp4ueXEd9HYPqH3QPpnDUpY5fUu',
-          'Content-Type': 'application/json',
-          'Duffel-Version': 'v2',
-        },
-      }
-    );
+    });
 
     // Respond with the Duffel API response
     res.status(200).json(response.data);
