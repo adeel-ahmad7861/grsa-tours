@@ -38,4 +38,29 @@ const findflight = async (req, res) => {
   }
 };
 
-module.exports = { findflight };
+
+const getOfferDetails = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract the offer ID from route parameters
+    const { return_available_services = true } = req.query; // Optional query parameter
+
+    if (!id) {
+      return res.status(400).json({ message: 'Offer ID is required.' });
+    }
+
+    // Make a GET request to Duffel API for the offer details
+    const response = await duffelAPI.get(`/air/offers/${id}`, {
+      params: { return_available_services },
+    });
+
+    // Respond with the Duffel API data
+    res.status(200).json(response.data);
+  } catch (error) {
+    // Handle errors and return a meaningful response
+    res.status(error.response?.status || 500).json({
+      error: error.response?.data || { message: 'An unexpected error occurred' },
+    });
+  }
+};
+
+module.exports = { findflight,getOfferDetails };
