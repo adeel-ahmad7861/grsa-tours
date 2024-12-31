@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routers/index');
 const config = require('./config/config');
+const http = require('http');
 
 // Serve static files for uploads
 const app = express();
@@ -36,11 +37,17 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
+// Start the server with custom timeout
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+
+// Create an HTTP server with increased timeout
+const server = http.createServer(app);
+
+// Increase the timeout to 5 minutes (300,000 ms)
+server.timeout = 300000;
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
 module.exports = app;
-
