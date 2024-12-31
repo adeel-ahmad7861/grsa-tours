@@ -8,7 +8,7 @@ const findflight = async (req, res) => {
     const {
       origin = 'LHE', // Default: Lahore
       destination = 'AUH', // Default: Abu Dhabi
-      departure_date = '2024-12-30', // Default date
+      departure_date = '2024-12-31', // Default date
       cabin_class = 'economy', // Default: Economy class
       passengers = [{ type: 'adult' }], // Default: 1 adult
     } = req.body;
