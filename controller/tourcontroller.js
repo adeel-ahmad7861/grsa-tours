@@ -16,12 +16,7 @@ const submittour = async (req, res) => {
     try {
         // Log start time
         console.log("Request received at:", new Date());
-
-        // // Validate input
-        // if (!req.body.name || !req.body.description) {
-        //     return res.status(400).json({ message: "Name and description are required" });
-        // }
-
+        
         // Create and save the new tour
         const newTour = new tour_data(req.body);
         console.log("Tour data created at:", new Date());

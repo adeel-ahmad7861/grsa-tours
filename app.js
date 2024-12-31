@@ -44,7 +44,7 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 
 // Increase the timeout to 5 minutes (300,000 ms)
-server.timeout = 300000;
+server.timeout = 360000;
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
