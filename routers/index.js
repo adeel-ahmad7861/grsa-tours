@@ -33,6 +33,8 @@ const router = express.Router();
 
 const defaultRoutes = [
     { path: '/upload', route: pictureroute },
+    { path: '/delete', route: pictureroute },
+    { path: '/update', route: pictureroute },
     { path: '/submit', route: toursroute },
     { path: '/delete', route: toursroute },
     { path: '/update', route: toursroute },
