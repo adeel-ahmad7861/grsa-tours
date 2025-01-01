@@ -1,14 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Append timestamp to the filename
-  },
-});
+const storage = multer.memoryStorage(); // Use memory storage
 
 const upload = multer({
   storage: storage,
@@ -19,7 +12,7 @@ const upload = multer({
     const mimetype = filetypes.test(file.mimetype);
 
     if (mimetype && extname) {
-      return cb(null, true);
+      cb(null, true);
     } else {
       cb(new Error('Invalid file type. Only JPEG, PNG, and GIF files are allowed!'));
     }

@@ -1,35 +1,44 @@
-const express = require('express');
-const router = express.Router();
 const Cloudinary = require('../utils/cloudinary');
-const upload = require('../middlewares/picturemulter');
+const tour_data = require('../models/toursmodel');
 
-router.post('/', upload.single('image'), (req, res) => {
-  console.log('File:', req.file);
-  console.log('Body:', req.body);
+exports.uploadPicture = async (req, res) => {
+  try {
+    console.log('Headers:', req.headers);
+    console.log('Body (before multer):', req.body);
+    console.log('File (before multer):', req.file);
 
-  if (!req.file) {
-    return res.status(400).json({
-      success: false,
-      message: 'No file uploaded',
-    });
-  }
-
-  // Upload to Cloudinary
-  Cloudinary.uploader.upload(req.file.path, (err, result) => {
-    if (err) {
-      console.error('Cloudinary Upload Error:', err);
-      return res.status(500).json({
+    if (!req.file) {
+      return res.status(400).json({
         success: false,
-        message: 'Error uploading to Cloudinary',
+        message: 'No file uploaded',
       });
     }
 
+    // Upload directly to Cloudinary without saving locally
+    const result = await Cloudinary.uploader.upload(req.file.buffer, {
+      folder: 'uploads', // Optional folder organization in Cloudinary
+      resource_type: 'image',
+    });
+
     res.status(200).json({
       success: true,
-      message: 'Uploaded successfully!',
-      data: result,
+      message: 'File uploaded successfully!',
+      fileDetails: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
     });
-  });
-});
 
-module.exports = router;
+     // Save the data in the existing Tour schema
+     const tour = new Tour(tourData);
+     await tour.save();
+
+  } catch (error) {
+    console.error('Cloudinary Upload Error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to upload file to Cloudinary',
+      error: error.message,
+    });
+  }
+};

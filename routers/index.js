@@ -28,9 +28,11 @@
 const express = require('express');
 const toursroute = require('./tourrouter');
 const flight = require('./findflightroute');
+const pictureroute = require('./pictureroute');
 const router = express.Router();
 
 const defaultRoutes = [
+    { path: '/upload', route: pictureroute },
     { path: '/submit', route: toursroute },
     { path: '/delete', route: toursroute },
     { path: '/update', route: toursroute },

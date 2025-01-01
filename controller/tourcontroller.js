@@ -14,16 +14,12 @@ const tour_data = require('../models/toursmodel'); // Import the tour model
 
 const submittour = async (req, res) => {
     try {
-        // Log start time
-        console.log("Request received at:", new Date());
         
         // Create and save the new tour
         const newTour = new tour_data(req.body);
-        console.log("Tour data created at:", new Date());
 
         // Save with write concern and timeout
         const result = await newTour.save({ writeConcern: { wtimeout: 5000 } });
-        console.log("Saved to database at:", new Date());
 
         res.status(201).json(result);
     } catch (error) {
